@@ -1,0 +1,70 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind setup note: include app and components globs for ts/tsx files in tailwind.config.ts. */
+:root {
+  --cta-red: #E94955;
+  --sky-blue: #8FCBE9;
+  --navy: #022A54;
+  --warm-yellow: #FFD166;
+  --cream: #FFF6EA;
+  --white: #FFFFFF;
+  --border-soft: rgba(2, 42, 84, 0.10);
+  --hud-shadow: 0 12px 30px rgba(2, 42, 84, 0.10);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--cream);
+  color: var(--navy);
+  font-family: var(--font-poppins), ui-sans-serif, system-ui;
+}
+
+.font-numbers {
+  font-family: var(--font-inter), ui-sans-serif, system-ui;
+}
+
+.shadow-hud {
+  box-shadow: var(--hud-shadow);
+}
+
+.confetti {
+  position: absolute;
+  inset: -20px 0 0 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 12px;
+  border-radius: 999px;
+  opacity: 0.9;
+  animation: confetti-burst 900ms ease-out forwards;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes confetti-burst {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--x, 0), 90px, 0) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece {
+    animation: none;
+  }
+}
+
