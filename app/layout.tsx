@@ -1,38 +1,24 @@
 ﻿import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
+const nunito = localFont({
+  src: "../public/adventure/nunito.woff2",
+  variable: "--font-nunito",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Numbeast — Coming Soon",
+  title: "Numbeast — Raise a little legend.",
   description:
-    "A math adventure where kids grow elemental companions by solving quick number challenges.",
+    "A maths adventure for ages 7–12. Hatch a companion, solve playful quests and explore Tide Cove with a friendly voice guide. Join the parent launch list.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${inter.variable} font-sans antialiased`}
-      >
-        {children}
-      </body>
+      <body className={nunito.variable}>{children}</body>
     </html>
   );
 }

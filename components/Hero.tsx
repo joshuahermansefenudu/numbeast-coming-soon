@@ -1,121 +1,335 @@
-﻿"use client";
-
+"use client";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import EmailCapture from "./EmailCapture";
-import FloatingDecor from "./FloatingDecor";
-import GameHudCard from "./GameHudCard";
 
-const supportChips = ["Ages 4–12", "K–7 Topics", "No Ads", "Family Friendly"];
-
+const crew = [
+  {
+    key: "flamfox",
+    name: "Flamfox",
+    element: "FIRE",
+    number: "02",
+    color: "#F5A25C",
+    fact: "A fiery friend with a big spark.",
+  },
+  {
+    key: "rollie",
+    name: "Rollie",
+    element: "EARTH",
+    number: "03",
+    color: "#B9D781",
+    fact: "Small steps. Rock-solid teamwork.",
+  },
+  {
+    key: "breeflap",
+    name: "Breeflap",
+    element: "AIR",
+    number: "04",
+    color: "#A5D9DC",
+    fact: "A curious mind. A soaring spirit.",
+  },
+];
+const scenes = [
+  "Solve a little maths",
+  "Earn a little power",
+  "Unlock the next adventure",
+];
 export default function Hero() {
-  const shouldReduceMotion = useReducedMotion();
-  const [xpBoosted, setXpBoosted] = useState(false);
-  const [popKey, setPopKey] = useState(0);
-  const emailInputId = "waitlist-email";
-
-  const handleCtaClick = () => {
-    setPopKey((value) => value + 1);
-    if (typeof window !== "undefined") {
-      const isMobile = window.matchMedia("(max-width: 639px)").matches;
-      if (isMobile) {
-        return;
-      }
+  const [phase, setPhase] = useState(0),
+    [paused, setPaused] = useState(false),
+    [watch, setWatch] = useState(false),
+    [ready, setReady] = useState(false),
+    [selected, setSelected] = useState<string | null>(null);
+  const dialog = useRef<HTMLDialogElement>(null),
+    iframe = useRef<HTMLIFrameElement>(null),
+    stage = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    if (paused || watch || reduced.matches) return;
+    const id = setInterval(() => {
+      if (!document.hidden) setPhase((v) => (v + 1) % 3);
+    }, 3600);
+    return () => clearInterval(id);
+  }, [paused, watch]);
+  useEffect(() => {
+    function message(e: MessageEvent) {
+      if (
+        e.origin === location.origin &&
+        e.source === iframe.current?.contentWindow &&
+        e.data?.type === "numbeast-ready"
+      )
+        setReady(true);
     }
-    const input = document.getElementById(
-      emailInputId
-    ) as HTMLInputElement | null;
-    if (!input) {
+    addEventListener("message", message);
+    return () => removeEventListener("message", message);
+  }, []);
+  function open() {
+    setReady(false);
+    setWatch(true);
+    dialog.current?.showModal();
+  }
+  function close() {
+    iframe.current?.contentWindow?.postMessage(
+      { type: "numbeast-stop" },
+      location.origin,
+    );
+    dialog.current?.close();
+    setWatch(false);
+  }
+  function move(e: React.PointerEvent<HTMLDivElement>) {
+    if (
+      e.pointerType !== "mouse" ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
       return;
-    }
-    input.scrollIntoView({
-      behavior: shouldReduceMotion ? "auto" : "smooth",
-      block: "center",
-    });
-    input.focus();
-  };
-
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty(
+      "--mx",
+      ((e.clientX - r.left) / r.width - 0.5) * 8 + "px",
+    );
+    e.currentTarget.style.setProperty(
+      "--my",
+      ((e.clientY - r.top) / r.height - 0.5) * 6 + "px",
+    );
+  }
   return (
-    <section className="relative overflow-hidden">
-      <FloatingDecor popKey={popKey} />
-      <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top,_rgba(143,203,233,0.35),_transparent_60%)]"
-        aria-hidden="true"
-      />
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-        <div className="mt-6 grid flex-1 items-center gap-10 lg:mt-0 lg:grid-cols-[1.05fr_1fr]">
-          <div className="order-2 space-y-6 lg:order-1">
-            <div className="space-y-0">
-              <div className="flex items-center">
-                <span className="relative flex h-[60px] w-[200px] items-center justify-start sm:h-[84px] sm:w-[260px] lg:h-[84px] lg:w-[240px] xl:h-[92px] xl:w-[260px]">
-                  <Image
-                    src="/images/numbeast-logo.png"
-                    alt="Numbeast logo"
-                    fill
-                    sizes="(max-width: 640px) 200px, (max-width: 1024px) 260px, 260px"
-                    className="object-contain"
-                    priority
-                  />
-                </span>
-              </div>
-
-              <div className="-mt-2 space-y-4 sm:-mt-3 lg:-mt-4">
-                <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-[var(--navy)] drop-shadow-[0_6px_16px_rgba(2,42,84,0.18)] sm:text-5xl lg:text-6xl">
-                  Hatch. Feed. Evolve.
-                </h1>
-                <p className="max-w-xl text-base text-[rgba(2,42,84,0.75)] sm:text-lg">
-                  A math adventure where kids grow elemental companions by
-                  solving quick number challenges.
-                </p>
-              </div>
-            </div>
-
-            <EmailCapture
-              onSuccess={() => setXpBoosted(true)}
-              inputId={emailInputId}
-            />
-
-            <div className="flex flex-wrap gap-2">
-              {supportChips.map((chip, index) => (
-                <motion.span
-                  key={chip}
-                  className="rounded-full border border-[var(--border-soft)] bg-white/70 px-3 py-1 text-xs font-medium text-[rgba(2,42,84,0.85)] shadow-[0_6px_14px_rgba(2,42,84,0.08)]"
-                  initial={
-                    shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }
-                  }
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: shouldReduceMotion ? 0 : 0.1 + index * 0.06,
-                    duration: shouldReduceMotion ? 0 : 0.3,
-                  }}
-                >
-                  {chip}
-                </motion.span>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-[var(--navy)]">
-              <span>Email us:</span>
-              <a
-                href="mailto:info@numbeast.com"
-                className="underline decoration-[rgba(2,42,84,0.35)] underline-offset-4 hover:decoration-[rgba(2,42,84,0.7)]"
-              >
-                info@numbeast.com
-              </a>
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2">
-            <GameHudCard
-              xpBoost={xpBoosted}
-              onPrimaryAction={handleCtaClick}
-            />
+    <main className="launch-page">
+      <header className="launch-header">
+        <a href="/" aria-label="Numbeast home">
+          <Image
+            unoptimized
+            className="wordmark"
+            src="/adventure/logo.webp"
+            alt="Numbeast"
+            width={210}
+            height={62}
+            priority
+          />
+        </a>
+        <span className="header-caption">
+          A little maths. A lot of adventure.
+        </span>
+        <a className="header-signup" href="#waitlist">
+          Get launch updates <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+      <section
+        className="game-hero"
+        aria-labelledby="hero-title"
+        data-phase={phase}
+        data-paused={paused}
+        ref={stage}
+        onPointerMove={move}
+        onPointerLeave={() => {
+          stage.current?.style.setProperty("--mx", "0px");
+          stage.current?.style.setProperty("--my", "0px");
+        }}
+      >
+        <div className="hero-stripes" aria-hidden="true" />
+        <div className="giant-number" aria-hidden="true">
+          01
+        </div>
+        <div className="hero-copy">
+          <p className="eyebrow">
+            <span aria-hidden="true">✦</span> MATHS QUESTS. ELEMENTAL FRIENDS.
+            AGES 7–12.
+          </p>
+          <h1 id="hero-title">
+            <span className="heading-first">RAISE A LITTLE</span>
+            <span className="heading-last">LEGEND.</span>
+          </h1>
+          <p className="hero-description">
+            Hatch a companion. Take on playful maths quests.
+            <br className="desktop-break" /> Watch your little friend become
+            something mighty.
+          </p>
+          <div className="hero-actions">
+            <a className="join-button" href="#waitlist">
+              Join the adventure <span aria-hidden="true">↗</span>
+            </a>
+            <button className="watch-button" onClick={open}>
+              <span className="play-ring" aria-hidden="true">
+                ▶
+              </span>
+              Watch a quest
+            </button>
           </div>
         </div>
-
-      </div>
-    </section>
+        <div
+          className="crew-deck"
+          aria-label="Meet the other elemental companions"
+        >
+          {crew.map((c, i) => (
+            <button
+              className="beast-card"
+              key={c.key}
+              style={
+                { "--card-color": c.color, "--card-index": i } as CSSProperties
+              }
+              data-selected={selected === c.key}
+              aria-pressed={selected === c.key}
+              onClick={() => setSelected((v) => (v === c.key ? null : c.key))}
+            >
+              <span className="card-heading">
+                <strong>{c.name}</strong>
+                <span>{c.number}</span>
+              </span>
+              <Image
+                unoptimized
+                src={`/adventure/${c.key}-stage-3.webp`}
+                alt={c.name + " " + c.element.toLowerCase() + " companion"}
+                width={270}
+                height={340}
+                sizes="(max-width:700px) 105px, 160px"
+                className="card-beast"
+              />
+              <span className="card-element">
+                {c.element}
+                <span aria-hidden="true">✦</span>
+              </span>
+            </button>
+          ))}
+          <p className="crew-caption" aria-live="polite">
+            {selected
+              ? crew.find((c) => c.key === selected)?.fact
+              : "FOUR ELEMENTS. ONE EXTRAORDINARY FRIENDSHIP."}
+          </p>
+        </div>
+        <div className="featured-beast">
+          <span className="orbit orbit-one" aria-hidden="true" />
+          <span className="orbit orbit-two" aria-hidden="true" />
+          <Image
+            unoptimized
+            className="splashle-hero"
+            src="/adventure/splashle-hero-v2.webp"
+            alt="Splashle, a blue and green water guardian, leaping forward with an outstretched paw"
+            width={1090}
+            height={1440}
+            sizes="(max-width:700px) 310px, (max-width:1100px) 430px, 580px"
+            quality={85}
+            priority
+          />
+          <span className="beast-label">
+            <span className="label-dot" />
+            SPLASHLE <small>WATER GUARDIAN / NO. 01</small>
+          </span>
+        </div>
+        <div className="quest-sticker" key={phase} aria-hidden="true">
+          <span className="sticker-kicker">
+            {phase === 0
+              ? "A LITTLE CHALLENGE"
+              : phase === 1
+                ? "QUEST COMPLETE"
+                : "THE NEXT CHAPTER"}
+          </span>
+          <strong>
+            {phase === 0
+              ? "7 + 5 = ?"
+              : phase === 1
+                ? "+10 XP"
+                : "New path. New possibilities."}
+          </strong>
+          <span className="sticker-detail">
+            {phase === 0 ? (
+              <>
+                <i>9</i>
+                <i className="quest-answer">12 ✓</i>
+                <i>14</i>
+              </>
+            ) : phase === 1 ? (
+              "A little practice. A little stronger."
+            ) : (
+              "Your adventure keeps growing."
+            )}
+          </span>
+        </div>
+        <div className="hero-bottom">
+          <span className="scene-label">
+            <i /> {scenes[phase]}
+          </span>
+          <button
+            className="motion-button"
+            onClick={() => setPaused((v) => !v)}
+            aria-label={paused ? "Play hero animation" : "Pause hero animation"}
+          >
+            {paused ? "▶" : "Ⅱ"}
+          </button>
+        </div>
+      </section>
+      <section className="signup-section" aria-label="Parent launch updates">
+        <div className="signup-copy">
+          <p className="eyebrow">YOUR NEXT ADVENTURE IS COMING</p>
+          <h2>Let the adventure find your inbox.</h2>
+        </div>
+        <EmailCapture />
+      </section>
+      <footer className="launch-footer">
+        <span>Made for curious minds. Built around play.</span>
+        <a href="mailto:info@numbeast.com">Say hello ↗</a>
+      </footer>
+      <dialog
+        ref={dialog}
+        className="journey-dialog"
+        onCancel={close}
+        onClick={(e) => {
+          if (e.target === dialog.current) close();
+        }}
+      >
+        <div className="journey-heading">
+          <strong>Your first Numbeast adventure</strong>
+          <button onClick={close} aria-label="Close adventure">
+            ×
+          </button>
+        </div>
+        <div className="journey-modal-body">
+          <div className="modal-device">
+            {watch && (
+              <iframe
+                ref={iframe}
+                src="/game/index.html"
+                title="Numbeast playable adventure"
+                allow="autoplay"
+              />
+            )}
+            <Image
+              unoptimized
+              src="/adventure/device.webp"
+              alt=""
+              width={443}
+              height={900}
+              aria-hidden="true"
+            />
+          </div>
+          <div>
+            <p className="eyebrow">CHOOSE. SOLVE. EXPLORE.</p>
+            <h2>
+              Come on.
+              <br />
+              Let’s explore.
+            </h2>
+            <p>
+              A friendly voice, three maths quests and your beast’s first
+              evolution. Follow the entire adventure, from the very first
+              screen.
+            </p>
+            <button
+              className="join-button"
+              disabled={!ready}
+              onClick={() =>
+                iframe.current?.contentWindow?.postMessage(
+                  { type: "numbeast-start", sound: true },
+                  location.origin,
+                )
+              }
+            >
+              {ready ? "▶ Play with sound" : "Getting the adventure ready…"}
+            </button>
+            <p className="modal-help">
+              You can also tap the phone and explore for yourself.
+            </p>
+          </div>
+        </div>
+      </dialog>
+    </main>
   );
 }
-

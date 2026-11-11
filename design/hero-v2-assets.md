@@ -1,0 +1,9 @@
+# Hero artwork
+
+Selected asset: `public/adventure/splashle-hero-v2.png`.
+
+Created with the built-in image-generation tool, using the approved Splashle guardian as the identity reference. This is a transparent 3D-style rendered illustration, animated on the website with CSS. It is not a rigged 3D mesh. The other three collectible cards retain the approved app artwork.
+
+Final prompt:
+
+Use case: stylized-concept. Create ONE premium 3D-style rendered character cutout for the Numbeast children's adventure game website, using the attached approved character as the identity reference. This is Splashle, an original green water turtle/dragon guardian with a cobalt blue segmented shell, cyan-and-navy water-fin mohawk/crest, creamy belly plates, flipper fins on muscular arms and tail, pale claws, large expressive eyes. Preserve these distinctive shapes and colours; do not invent a different animal. Repose him in a dynamic welcoming mid-hop, three-quarter view facing slightly right, one arm reaching forward toward the viewer with an open paw and the other bent, feet readable and separated. Friendly battle-ready confidence for ages 7–12, mischievous grin, chunky appealing proportions. High-end handmade animated game key-art aesthetic: sculpted rounded forms, matte soft-touch surfaces, crisp intentional silhouette, restrained physical shading and small bevels, soft studio key light from upper left, gentle warm fill. Keep the design stylised and authored, not photorealistic, not a generic AI baby mascot. Full character with all fins, claws and tail inside the image, fills roughly 85% of the canvas height, little empty padding. Isolated actual transparent background, no floor, no platform, no cast shadow blob, no scenery, no text, no watermark. This is a rendered illustration, not a 3D mesh.
