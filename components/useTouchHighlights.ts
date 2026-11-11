@@ -29,9 +29,13 @@ export default function useTouchHighlights() {
       groups.forEach(stop);
     }
 
+    function canPlay(group: HTMLElement) {
+      return !interacted || group.dataset.touchHighlight === "egg";
+    }
+
     function start(group: HTMLElement) {
-      if (playing.has(group)) return;
-      const targets = group.matches(".quest-sticker")
+      if (playing.has(group) || !canPlay(group)) return;
+      const targets = group.matches(".quest-sticker, .nest-egg")
         ? [group]
         : Array.from(
             group.querySelectorAll<HTMLElement>(
@@ -79,7 +83,6 @@ export default function useTouchHighlights() {
       if (
         disposed ||
         !loaded ||
-        interacted ||
         document.hidden ||
         !touch.matches ||
         !motion.matches
@@ -94,7 +97,6 @@ export default function useTouchHighlights() {
         (entries) => {
           if (
             disposed ||
-            interacted ||
             document.hidden ||
             !touch.matches ||
             !motion.matches
@@ -112,7 +114,7 @@ export default function useTouchHighlights() {
         },
         { threshold: 0.35 },
       );
-      groups.forEach((group) => observer?.observe(group));
+      groups.filter(canPlay).forEach((group) => observer?.observe(group));
     }
 
     function onLoad() {
@@ -126,8 +128,12 @@ export default function useTouchHighlights() {
         event.target.closest("button, input, a")
       ) {
         interacted = true;
-        observer?.disconnect();
-        stopAll();
+        for (const group of groups) {
+          if (!canPlay(group)) {
+            observer?.unobserve(group);
+            stop(group);
+          }
+        }
       }
     }
 

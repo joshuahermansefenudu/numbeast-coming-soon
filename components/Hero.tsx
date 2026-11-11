@@ -232,6 +232,8 @@ export default function Hero() {
             <span
               key={`${family}-${index}`}
               className="nest-egg"
+              data-family={family}
+              data-touch-highlight="egg"
               style={
                 {
                   "--egg-index": index,
@@ -240,13 +242,16 @@ export default function Hero() {
                 } as CSSProperties
               }
             >
-              <Image
-                unoptimized
-                src={`/adventure/egg-art/${family}.svg`}
-                width={186}
-                height={214}
-                alt=""
-              />
+              <span className="egg-art">
+                <Image
+                  unoptimized
+                  src={`/adventure/egg-art/${family}.svg`}
+                  width={186}
+                  height={214}
+                  alt=""
+                />
+                <span className="egg-hit" />
+              </span>
             </span>
           ))}
         </div>
