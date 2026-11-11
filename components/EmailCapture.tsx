@@ -52,7 +52,7 @@ export default function EmailCapture() {
             name="email"
             type="email"
             autoComplete="email"
-            placeholder="Parent or guardian email"
+            placeholder="Enter your email"
             required
             maxLength={254}
             disabled={status === "sending" || status === "success"}
@@ -62,11 +62,13 @@ export default function EmailCapture() {
             type="submit"
             disabled={status === "sending" || status === "success"}
           >
-            {status === "sending"
-              ? "Joining…"
-              : status === "success"
-                ? "You’re in! ✓"
-                : "Join the adventure"}
+            <span className="join-label">
+              {status === "sending"
+                ? "Joining…"
+                : status === "success"
+                  ? "You’re in! ✓"
+                  : "Join the adventure"}
+            </span>
           </button>
         </div>
         <div className="honey" aria-hidden="true">

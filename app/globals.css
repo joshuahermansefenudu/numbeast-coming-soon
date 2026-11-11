@@ -154,6 +154,9 @@ input:focus-visible {
   opacity: 1;
 }
 .email-row button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   flex: 0 0 211px;
   background: var(--gold);
   border: 0;
@@ -165,9 +168,31 @@ input:focus-visible {
   padding: 10px 15px;
   min-height: 54px;
 }
-.email-row button:active {
-  translate: 0 2px;
-  border-bottom-width: 2px;
+.join-label {
+  position: relative;
+  z-index: 1;
+}
+.email-row button:not(:disabled)::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  top: -25%;
+  left: -55%;
+  width: 35%;
+  height: 150%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 45%),
+    transparent
+  );
+  transform: translateX(0) skewX(-20deg);
+  animation: adventure-shine 10.8s ease-in-out infinite;
+}
+.waitlist:focus-within .email-row button::before {
+  opacity: 0;
+  animation-play-state: paused;
 }
 .signup-note {
   font-size: 11px;
@@ -192,20 +217,29 @@ input:focus-visible {
   height: 1px;
   overflow: hidden;
 }
-.featured-beast {
+.featured-team {
   position: absolute;
-  right: 5.15%;
-  top: -4px;
-  width: 540px;
-  height: 710px;
+  right: 20px;
+  top: 35px;
+  width: 650px;
+  height: 600px;
   z-index: 2;
   pointer-events: none;
 }
-.splashle-hero {
-  width: 100%;
-  height: 100%;
+.hero-beast {
+  position: absolute;
+  height: auto;
   object-fit: contain;
-  animation: float-beast 10.8s infinite;
+}
+.splashle-hero {
+  left: 0;
+  top: 0;
+  width: 67.7%;
+}
+.flamfox-hero {
+  right: 0;
+  top: 15%;
+  width: 55.4%;
 }
 .crew-deck {
   position: absolute;
@@ -230,17 +264,6 @@ input:focus-visible {
   text-align: left;
   rotate: calc((var(--card-index) - 1) * 8deg);
   transform-origin: center bottom;
-  transition:
-    rotate 0.3s,
-    scale 0.3s,
-    box-shadow 0.3s;
-  animation: float-card 10.8s infinite;
-}
-.beast-card:nth-child(2) {
-  animation-name: float-card-earth;
-}
-.beast-card:nth-child(3) {
-  animation-name: float-card-air;
 }
 .beast-card::before {
   content: "";
@@ -253,9 +276,6 @@ input:focus-visible {
 .beast-card:hover,
 .beast-card:focus-visible,
 .beast-card[data-selected="true"] {
-  rotate: 0deg;
-  scale: 1.04;
-  z-index: 5;
   box-shadow: 0 12px 20px #061e2980;
 }
 .beast-card[data-selected="true"] {
@@ -304,9 +324,9 @@ input:focus-visible {
 .quest-sticker {
   position: absolute;
   z-index: 5;
-  right: 6.5%;
-  top: 583px;
-  width: 225px;
+  right: 32px;
+  top: 606px;
+  width: 190px;
   padding: 14px 15px 16px;
   color: var(--ink);
   background: #fffdf4;
@@ -349,84 +369,14 @@ input:focus-visible {
   background: #e8f3e9;
   color: #216947;
 }
-.motion-button {
-  position: absolute;
-  z-index: 6;
-  right: 16px;
-  bottom: 14px;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #b8d8d566;
-  background: #153f47;
-  color: #c3d9d7;
-  border-radius: 50%;
-  font-size: 11px;
-  padding: 0;
-}
-[data-paused="true"] *,
-[data-paused="true"] *::before {
-  animation-play-state: paused !important;
-}
-@keyframes float-beast {
+@keyframes adventure-shine {
   0%,
-  46.3%,
+  15% {
+    transform: translateX(0) skewX(-20deg);
+  }
+  28%,
   100% {
-    transform: translateY(0);
-    animation-timing-function: linear;
-  }
-  23.15% {
-    transform: translateY(-9px);
-  }
-  0%,
-  23.15% {
-    animation-timing-function: ease-in-out;
-  }
-}
-@keyframes float-card {
-  0%,
-  46.3%,
-  100% {
-    transform: translateY(0);
-    animation-timing-function: linear;
-  }
-  18.52% {
-    transform: translateY(-5px);
-  }
-  0%,
-  18.52% {
-    animation-timing-function: ease-in-out;
-  }
-}
-@keyframes float-card-earth {
-  0%,
-  49.07%,
-  100% {
-    transform: translateY(0);
-    animation-timing-function: linear;
-  }
-  21.3% {
-    transform: translateY(-5px);
-  }
-  0%,
-  21.3% {
-    animation-timing-function: ease-in-out;
-  }
-}
-@keyframes float-card-air {
-  0%,
-  51.85%,
-  100% {
-    transform: translateY(0);
-    animation-timing-function: linear;
-  }
-  24.07% {
-    transform: translateY(-5px);
-  }
-  0%,
-  24.07% {
-    animation-timing-function: ease-in-out;
+    transform: translateX(480%) skewX(-20deg);
   }
 }
 
@@ -443,13 +393,13 @@ input:focus-visible {
     min-height: 700px;
   }
   .hero-copy {
-    max-width: 62%;
+    max-width: 56%;
   }
   .heading-first {
     font-size: clamp(47px, 5.3vw, 61px);
   }
   .heading-last {
-    font-size: clamp(132px, 15vw, 172px);
+    font-size: clamp(118px, 15vw, 172px);
   }
   .hero-description {
     font-size: 16px;
@@ -469,11 +419,11 @@ input:focus-visible {
   .signup-note {
     max-width: 360px;
   }
-  .featured-beast {
+  .featured-team {
     width: 45%;
-    height: 570px;
-    right: 1%;
-    top: 60px;
+    height: 420px;
+    right: 0;
+    top: 90px;
   }
   .crew-deck {
     top: auto;
@@ -552,12 +502,22 @@ input:focus-visible {
   .signup-status {
     font-size: 13px;
   }
-  .featured-beast {
+  .featured-team {
     top: auto;
-    bottom: 60px;
-    width: 290px;
-    height: 383px;
+    bottom: 120px;
+    width: 342px;
+    height: 340px;
     right: 0;
+  }
+  .splashle-hero {
+    left: 20px;
+    top: 0;
+    width: 245px;
+  }
+  .flamfox-hero {
+    right: 0;
+    top: 85px;
+    width: 190px;
   }
   .giant-number {
     left: 25%;
@@ -567,17 +527,12 @@ input:focus-visible {
   .crew-deck {
     top: auto;
     left: 26px;
-    bottom: 30px;
+    bottom: 12px;
     scale: 0.58;
     transform-origin: left bottom;
   }
   .quest-sticker {
-    top: auto;
-    bottom: 280px;
-    left: 18px;
-    right: auto;
-    width: 150px;
-    padding: 12px 12px 14px;
+    display: none;
   }
   .sticker-kicker {
     font-size: 7px;
@@ -591,12 +546,6 @@ input:focus-visible {
   .sticker-detail i {
     padding: 6px 2px;
     font-size: 10px;
-  }
-  .motion-button {
-    right: 12px;
-    bottom: 10px;
-    width: 26px;
-    height: 26px;
   }
 }
 @media (max-width: 370px) {
@@ -617,10 +566,20 @@ input:focus-visible {
     scale: 0.48;
     left: 22px;
   }
-  .featured-beast {
-    width: 270px;
-    height: 357px;
-    bottom: 67px;
+  .featured-team {
+    width: 100%;
+    max-width: 312px;
+    height: 310px;
+    bottom: 140px;
+  }
+  .splashle-hero {
+    left: 3%;
+    width: 72%;
+  }
+  .flamfox-hero {
+    right: 0;
+    top: 75px;
+    width: 55.5%;
   }
   .quest-sticker {
     bottom: 275px;
@@ -634,7 +593,7 @@ input:focus-visible {
     animation: none !important;
     transition: none !important;
   }
-  .motion-button {
+  .email-row button::before {
     display: none;
   }
 }

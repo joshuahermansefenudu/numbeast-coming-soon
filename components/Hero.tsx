@@ -31,7 +31,6 @@ const crew = [
 ];
 
 export default function Hero() {
-  const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -49,11 +48,7 @@ export default function Hero() {
           />
         </a>
       </header>
-      <section
-        className="game-hero"
-        aria-labelledby="hero-title"
-        data-paused={paused}
-      >
+      <section className="game-hero" aria-labelledby="hero-title">
         <div className="giant-number" aria-hidden="true">
           01
         </div>
@@ -110,15 +105,29 @@ export default function Hero() {
             {crew.find((c) => c.key === selected)?.fact ?? ""}
           </p>
         </div>
-        <div className="featured-beast">
+        <div
+          className="featured-team"
+          role="group"
+          aria-label="Your Numbeast team"
+        >
           <Image
             unoptimized
-            className="splashle-hero"
+            className="hero-beast splashle-hero"
             src="/adventure/splashle-hero-v2.webp"
             alt="Splashle, a blue and green water guardian, leaping forward with an outstretched paw"
-            width={1090}
-            height={1440}
-            sizes="(max-width:700px) 290px, (max-width:1100px) 430px, 540px"
+            width={1105}
+            height={1423}
+            sizes="(max-width:700px) 245px, (max-width:1150px) 350px, 440px"
+            priority
+          />
+          <Image
+            unoptimized
+            className="hero-beast flamfox-hero"
+            src="/adventure/flamfox-hero-v1.webp"
+            alt="Flamfox, an orange fire-fox companion, standing confidently alongside Splashle"
+            width={1105}
+            height={1423}
+            sizes="(max-width:700px) 190px, (max-width:1150px) 285px, 360px"
             priority
           />
         </div>
@@ -131,14 +140,6 @@ export default function Hero() {
             <i>14</i>
           </span>
         </div>
-        <button
-          className="motion-button"
-          onClick={() => setPaused((v) => !v)}
-          aria-label={paused ? "Play hero animation" : "Pause hero animation"}
-          aria-pressed={paused}
-        >
-          <span aria-hidden="true">{paused ? "▶" : "Ⅱ"}</span>
-        </button>
       </section>
     </main>
   );
