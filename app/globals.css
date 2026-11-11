@@ -58,11 +58,15 @@ input:focus-visible {
   border: 0;
 }
 .launch-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
   max-width: 1600px;
-  padding: 0 40px 40px;
+  padding: 0 40px 24px;
   margin: auto;
 }
 .launch-header {
+  flex-shrink: 0;
   height: 143px;
   display: flex;
   align-items: flex-start;
@@ -78,7 +82,8 @@ input:focus-visible {
   isolation: isolate;
   background: #153f47;
   border-radius: 28px;
-  min-height: 740px;
+  min-height: 800px;
+  flex-shrink: 0;
   color: #fffdf4;
   overflow: hidden;
   padding: 64px;
@@ -86,7 +91,7 @@ input:focus-visible {
 .giant-number {
   font-family: var(--font-adventure), sans-serif;
   position: absolute;
-  left: 65%;
+  left: calc(65% + 1px);
   top: 55px;
   font-size: 470px;
   line-height: 1;
@@ -114,11 +119,13 @@ input:focus-visible {
   display: block;
   font-size: 76px;
   line-height: 0.95;
+  letter-spacing: 0.015em;
 }
 .heading-last {
   display: block;
   font-size: 190px;
   line-height: 0.87;
+  letter-spacing: 0.015em;
   color: var(--gold);
 }
 .hero-description {
@@ -126,7 +133,8 @@ input:focus-visible {
   line-height: 1.5;
   color: #c3d9d7;
   max-width: 580px;
-  margin: 20px 0 22px;
+  min-height: 52px;
+  margin: 16.5px 0 18px;
 }
 .waitlist {
   position: relative;
@@ -136,17 +144,18 @@ input:focus-visible {
 .email-row {
   display: flex;
   gap: 9px;
-  align-items: stretch;
+  align-items: flex-start;
 }
 .email-row input {
   min-width: 0;
   width: 100%;
-  height: 54px;
+  height: 52px;
   border: 1px solid #b9ccc8;
   border-radius: 9px;
-  padding: 0 15px;
+  padding: 0 12px;
   color: var(--ink);
   font-size: 16px;
+  line-height: 1.2;
   background: #fff;
 }
 .email-row input::placeholder {
@@ -165,6 +174,7 @@ input:focus-visible {
   color: var(--ink);
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.2;
   padding: 10px 15px;
   min-height: 54px;
 }
@@ -196,9 +206,9 @@ input:focus-visible {
 }
 .signup-note {
   font-size: 11px;
-  line-height: 1.5;
-  margin: 9px 0 0;
-  color: #c3d9d7;
+  line-height: 13px;
+  margin: 10px 0 0;
+  color: #fff;
 }
 .signup-status {
   font-size: 14px;
@@ -227,9 +237,53 @@ input:focus-visible {
   pointer-events: none;
 }
 .hero-beast {
-  position: absolute;
-  height: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+}
+.featured-character {
+  position: absolute;
+  aspect-ratio: 1105 / 1423;
+  transform-origin: 50% 85%;
+  transition:
+    transform 220ms ease-out,
+    filter 220ms ease-out;
+}
+.character-hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+}
+.splashle-hero .character-hit {
+  clip-path: polygon(59.1% 2.3%,42.6% 4.1%,52.3% 13.1%,40.2% 18.3%,47.8% 25.4%,29.6% 30.8%,15.8% 44.4%,11.9% 58.2%,17.9% 56.2%,29.1% 67.7%,11.7% 65.8%,2.4% 74.1%,23.1% 74.8%,11% 92%,19.5% 98.6%,29.3% 97.4%,38.1% 76%,63.8% 65.8%,59.9% 71.9%,74.6% 80.5%,85.6% 79%,75.7% 69.3%,82.6% 58.6%,68.4% 53.7%,71.5% 49.5%,86.6% 52.5%,95.7% 38.7%,85.8% 32.5%,76.3% 41.7%,72% 34.7%,80.8% 20%);
+}
+.flamfox-hero .character-hit {
+  clip-path: polygon(37.1% 1.6%,17.1% 19.4%,21.2% 36.3%,33.5% 39.1%,20.3% 46.9%,16.7% 36%,7.3% 42.2%,13.1% 53.9%,27% 52.9%,5.9% 95.6%,24.8% 94.3%,34.3% 66.3%,51.5% 96.2%,65.3% 98.2%,51% 66.1%,69.5% 72.3%,86.8% 66.9%,96% 41.7%,79.1% 29.7%,83.8% 22.8%,67.5% 22.9%,59.4% 34.5%,68.5% 48.6%,58% 57.3%,63.2% 48.4%,44.7% 37.3%,59.5% 27.9%,61.5% 9.4%,50.5% 12%);
+}
+.featured-character:focus-within,
+.featured-character[data-selected="true"] {
+  filter: drop-shadow(0 0 9px #f5bd5088) brightness(1.05);
+}
+.character-hit:focus-visible {
+  outline: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .featured-character:hover,
+  .featured-character:focus-within {
+    z-index: 3;
+    transform: translateY(-8px) rotate(-1deg) scale(1.015);
+    filter: drop-shadow(0 0 9px #f5bd5088) brightness(1.05);
+  }
+  .flamfox-hero:hover,
+  .flamfox-hero:focus-within {
+    transform: translateY(-8px) rotate(1deg) scale(1.015);
+  }
 }
 .splashle-hero {
   left: 0;
@@ -243,7 +297,7 @@ input:focus-visible {
 }
 .crew-deck {
   position: absolute;
-  top: 505px;
+  top: 550px;
   left: 80px;
   width: 510px;
   height: 205px;
@@ -251,7 +305,7 @@ input:focus-visible {
 }
 .beast-card {
   position: absolute;
-  top: 0;
+  top: calc(3px - var(--card-index) * 3px);
   left: calc(var(--card-index) * 146px);
   width: 166px;
   height: 190px;
@@ -263,7 +317,8 @@ input:focus-visible {
   padding: 10px;
   text-align: left;
   rotate: calc((var(--card-index) - 1) * 8deg);
-  transform-origin: center bottom;
+  transform-origin: top left;
+  z-index: var(--card-layer);
   transition:
     translate 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
     rotate 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -319,12 +374,18 @@ input:focus-visible {
   font-family: var(--font-adventure), sans-serif;
   font-size: 18px;
   font-weight: 400;
+  line-height: 1.2;
   letter-spacing: 0.03em;
 }
 .card-heading > span {
-  font-size: 10px;
+  position: absolute;
+  left: 125px;
+  top: 2px;
+  width: 22px;
+  font-size: 9px;
   font-weight: 700;
-  opacity: 0.65;
+  line-height: 1.2;
+  color: var(--muted);
 }
 .card-beast {
   position: absolute;
@@ -336,62 +397,162 @@ input:focus-visible {
 }
 .card-element {
   position: absolute;
-  bottom: 13px;
+  top: 163px;
   left: 9px;
-  right: 9px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 9px;
-  letter-spacing: 0.1em;
+  width: 115px;
+  font-size: 8px;
+  line-height: 1.2;
   font-weight: 700;
 }
 .quest-sticker {
   position: absolute;
   z-index: 5;
-  right: 32px;
-  top: 606px;
+  right: 47px;
+  top: 649.155px;
   width: 190px;
-  padding: 14px 15px 16px;
+  height: 124px;
   color: var(--ink);
   background: #fffdf4;
   border: 2px solid var(--ink);
   border-radius: 14px;
   box-shadow: 0 12px 18px #061e2947;
   rotate: -7deg;
+  transform-origin: top left;
+  padding: 0;
+  text-align: left;
+  transition:
+    translate 240ms ease-out,
+    rotate 240ms ease-out,
+    scale 240ms ease-out,
+    box-shadow 240ms ease-out;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) {
+  translate: 0 -8px;
+  rotate: -3deg;
+  scale: 1.035;
+  box-shadow:
+    0 16px 28px #061e2959,
+    0 0 0 3px var(--gold);
+}
+.equation-answer {
+  display: inline-grid;
+  min-width: 31px;
+  vertical-align: top;
+}
+.equation-answer > span {
+  grid-area: 1 / 1;
+  transition:
+    opacity 180ms ease-out,
+    transform 240ms ease-out;
+}
+.answer-solution {
+  opacity: 0;
+  transform: translateY(6px);
+  color: #24744f;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) .answer-prompt {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition-delay: 280ms;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) .answer-solution {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 320ms;
 }
 .sticker-kicker {
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  width: 160px;
   display: block;
   color: var(--water);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  line-height: 1.2;
 }
 .quest-sticker > strong {
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  width: 160px;
   display: block;
-  margin-top: 5px;
-  font-size: 28px;
-  line-height: 1.1;
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.08;
   font-weight: 700;
 }
 .sticker-detail {
+  position: absolute;
+  left: 13px;
+  top: 77px;
+  width: 156px;
   display: flex;
-  gap: 5px;
-  margin-top: 14px;
+  gap: 6px;
 }
-.sticker-detail i {
-  flex: 1;
-  text-align: center;
+.sticker-detail > span {
+  flex: 0 0 48px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
   border-radius: 4px;
-  padding: 6px 4px;
   background: #f6f4eb;
-  font-style: normal;
-  font-size: 12px;
-  line-height: 1;
+  font-size: 10px;
+  line-height: 1.2;
   font-weight: 700;
+  transition:
+    background 200ms,
+    color 200ms,
+    opacity 200ms;
 }
-.sticker-detail .quest-answer {
-  background: #e8f3e9;
-  color: #216947;
+.answer-check {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  margin-left: -13px;
+  transition:
+    opacity 160ms,
+    margin-left 160ms;
+}
+.answer-check path {
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 14;
+  stroke-dashoffset: 14;
+  transition: stroke-dashoffset 240ms ease-out;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) .quest-answer {
+  background: #cbe8cb;
+  color: #24583e;
+  animation: answer-pop 560ms 140ms both;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) .answer-check {
+  opacity: 1;
+  margin-left: 0;
+  transition-delay: 260ms;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) .answer-check path {
+  stroke-dashoffset: 0;
+  transition-delay: 320ms;
+}
+.quest-sticker:is(:hover, :focus-visible, [data-solved="true"])
+  .sticker-detail > span:not(.quest-answer) {
+  opacity: 0.45;
+}
+@keyframes answer-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.16);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @keyframes adventure-shine {
   0%,
@@ -404,6 +565,98 @@ input:focus-visible {
   }
 }
 
+.growth-strip {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-height: 240px;
+  margin-top: 20px;
+  padding: 18px 40px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.growth-landscape {
+  object-fit: cover;
+  object-position: center 64%;
+  z-index: -2;
+}
+.growth-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    var(--paper) 0%,
+    #f6f4ebf5 25%,
+    #f6f4eb66 65%,
+    #f6f4eb00 100%
+  );
+}
+.growth-copy p {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+}
+.growth-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 34%;
+}
+.growth-copy h2 {
+  font-family: var(--font-adventure), sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 0.98;
+  margin: 0;
+}
+.egg-nest {
+  position: absolute;
+  z-index: 1;
+  right: -1%;
+  bottom: -45px;
+  width: 65%;
+  height: 280px;
+  pointer-events: none;
+}
+.nest-egg {
+  position: absolute;
+  left: calc(var(--egg-index) * 14%);
+  bottom: 0;
+  width: 24%;
+  height: calc(clamp(180px, 20vw, 250px) * var(--egg-size));
+  rotate: var(--egg-tilt);
+  transform-origin: center bottom;
+  filter: drop-shadow(3px 8px 3px #284a3c33);
+}
+.nest-egg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.nest-grass {
+  position: absolute;
+  z-index: 2;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  pointer-events: none;
+}
+.grass-back {
+  fill: #9bbb60;
+  stroke: #4c7d50;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+.grass-front {
+  fill: #c2d17b;
+}
+
 @media (max-width: 1150px) and (min-width: 701px) {
   .launch-page {
     padding: 0 24px 24px;
@@ -414,7 +667,7 @@ input:focus-visible {
   }
   .game-hero {
     padding: 58px 40px;
-    min-height: 700px;
+    min-height: 760px;
   }
   .hero-copy {
     max-width: 56%;
@@ -457,10 +710,14 @@ input:focus-visible {
     transform-origin: left bottom;
   }
   .quest-sticker {
+    left: auto;
     width: 190px;
     right: 3%;
     top: auto;
     bottom: 38px;
+  }
+  .growth-strip {
+    padding-inline: 28px;
   }
 }
 @media (max-width: 700px) {
@@ -478,7 +735,7 @@ input:focus-visible {
   .game-hero {
     border-radius: 20px;
     padding: 30px 24px;
-    min-height: 890px;
+    min-height: 940px;
   }
   .hero-copy {
     width: 100%;
@@ -490,7 +747,8 @@ input:focus-visible {
   }
   .heading-first {
     font-size: clamp(39px, 11.5vw, 58px);
-    line-height: 1;
+    height: 1em;
+    line-height: 0.95;
   }
   .heading-last {
     font-size: clamp(108px, 30vw, 154px);
@@ -499,7 +757,8 @@ input:focus-visible {
   .hero-description {
     font-size: 15px;
     line-height: 1.45;
-    margin: 17px 0 18px;
+    min-height: 66px;
+    margin: 17px 0;
     max-width: 440px;
   }
   .desktop-break {
@@ -507,10 +766,12 @@ input:focus-visible {
   }
   .email-row {
     flex-direction: column;
+    align-items: stretch;
     gap: 8px;
   }
   .email-row input {
     height: 50px;
+    padding: 0 14px;
   }
   .email-row button {
     flex-basis: auto;
@@ -522,13 +783,14 @@ input:focus-visible {
     font-size: 10px;
     line-height: 1.4;
     max-width: 330px;
+    color: #c3d9d7;
   }
   .signup-status {
     font-size: 13px;
   }
   .featured-team {
     top: auto;
-    bottom: 120px;
+    bottom: 145px;
     width: 342px;
     height: 340px;
     right: 0;
@@ -544,14 +806,12 @@ input:focus-visible {
     width: 190px;
   }
   .giant-number {
-    left: 25%;
-    top: 390px;
-    font-size: 340px;
+    display: none;
   }
   .crew-deck {
     top: auto;
-    left: 26px;
-    bottom: 12px;
+    left: 33px;
+    bottom: 20px;
     scale: 0.58;
     transform-origin: left bottom;
   }
@@ -567,21 +827,55 @@ input:focus-visible {
   .sticker-detail {
     gap: 4px;
   }
-  .sticker-detail i {
-    padding: 6px 2px;
+  .sticker-detail > span {
     font-size: 10px;
+  }
+  .growth-strip {
+    min-height: 330px;
+    margin-top: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .growth-strip::before {
+    background: linear-gradient(120deg, #f6f4ebfa, #f6f4eb99 70%, #f6f4eb00);
+  }
+  .growth-copy h2 {
+    font-size: 32px;
+  }
+  .growth-copy {
+    max-width: none;
+  }
+  .egg-nest {
+    left: -12%;
+    right: auto;
+    width: 124%;
+    bottom: -40px;
+    height: 220px;
+  }
+  .nest-egg {
+    left: calc(var(--egg-index) * 12.5%);
+    width: 30%;
+    height: calc(200px * var(--egg-size));
+  }
+  .nest-grass {
+    width: 190%;
+    left: -90%;
+    height: 70px;
   }
 }
 @media (max-width: 370px) {
   .game-hero {
     padding: 29px 20px;
-    min-height: 890px;
+    min-height: 940px;
   }
   .heading-first {
     font-size: clamp(33px, 11.5vw, 39px);
   }
   .heading-last {
-    font-size: clamp(86px, 30vw, 108px);
+    font-size: clamp(86px, 29.5vw, 106px);
   }
   .hero-description {
     font-size: 14px;
@@ -624,5 +918,17 @@ input:focus-visible {
   .beast-card:focus-visible {
     translate: none;
     rotate: calc((var(--card-index) - 1) * 8deg);
+  }
+  .featured-character:hover,
+  .featured-character:focus-within {
+    transform: none;
+  }
+  .quest-sticker:is(:hover, :focus-visible, [data-solved="true"]) {
+    translate: none;
+    rotate: -7deg;
+    scale: 1;
+  }
+  .equation-answer > span {
+    transform: none;
   }
 }

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 180 232" fill="none">
+  <defs>
+    <linearGradient id="shell" x1="65" y1="28" x2="135" y2="217" gradientUnits="userSpaceOnUse"><stop stop-color="#FFC04D"/><stop offset="1" stop-color="#DF5125"/></linearGradient>
+    <clipPath id="egg"><path d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z"/></clipPath>
+  </defs>
+  <path id="Fire-shell" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" fill="url(#shell)"/>
+  <g id="Fire-markings" clip-path="url(#egg)">
+    <path d="M27 157C38 119 56 121 80 104C108 85 118 61 101 43C143 64 140 105 108 124C88 138 84 155 105 160C131 165 141 139 132 125C162 143 154 178 131 190C105 206 101 217 109 235H55C49 199 20 197 27 157Z" fill="#FFDF4B"/>
+    <path d="M152 54C188 79 188 117 160 134C170 109 149 103 150 86C151 75 156 64 152 54Z" fill="#FFDF4B"/>
+  </g>
+  <path id="Fire-outline" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" stroke="#52392D" stroke-width="5"/>
+  <path id="Fire-gloss" d="M48 70C54 57 65 45 75 43" stroke="#FFF6BA" stroke-opacity=".62" stroke-width="10" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 180 232" fill="none">
+  <defs>
+    <linearGradient id="shell" x1="65" y1="28" x2="135" y2="217" gradientUnits="userSpaceOnUse"><stop stop-color="#4DDAEE"/><stop offset="1" stop-color="#147CA9"/></linearGradient>
+    <clipPath id="egg"><path d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z"/></clipPath>
+  </defs>
+  <path id="Water-shell" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" fill="url(#shell)"/>
+  <g id="Water-waves" clip-path="url(#egg)" stroke="#BCEFE6" stroke-width="16" stroke-linecap="round">
+    <path d="M30 98C55 105 89 87 99 68C110 45 92 36 72 40"/>
+    <path d="M11 157C24 136 57 123 77 128C96 133 80 143 70 154C45 183 74 193 99 188C122 184 147 171 157 157"/>
+    <path d="M145 93C161 81 180 83 192 98"/>
+  </g>
+  <path id="Water-outline" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" stroke="#173D4B" stroke-width="5"/>
+  <path id="Water-gloss" d="M48 70C54 57 65 45 75 43" stroke="white" stroke-opacity=".48" stroke-width="10" stroke-linecap="round"/>
+</svg>

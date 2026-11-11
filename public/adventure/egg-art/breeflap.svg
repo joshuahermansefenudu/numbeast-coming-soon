@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 180 232" fill="none">
+  <defs>
+    <linearGradient id="shell" x1="65" y1="28" x2="135" y2="217" gradientUnits="userSpaceOnUse"><stop stop-color="#8CDDD2"/><stop offset="1" stop-color="#29909C"/></linearGradient>
+    <clipPath id="egg"><path d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z"/></clipPath>
+  </defs>
+  <path id="Air-shell" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" fill="url(#shell)"/>
+  <g id="Air-swirls" clip-path="url(#egg)" stroke="#FFF0C9" stroke-width="12" stroke-linecap="round">
+    <path d="M52 60C40 75 53 86 68 80C91 72 105 46 129 48"/>
+    <path d="M16 129C-2 115 19 103 31 112C44 122 31 141 51 143C85 146 101 97 132 98C161 99 168 127 149 135C132 142 124 124 136 120"/>
+    <path d="M72 190C91 204 113 188 109 174C104 158 83 166 87 178C80 169 50 163 27 174"/>
+  </g>
+  <path id="Air-outline" d="M100 22C58 22 16 95 16 151C16 204 52 224 100 224S184 204 184 151C184 95 142 22 100 22Z" stroke="#264B4B" stroke-width="5"/>
+  <path id="Air-gloss" d="M48 70C54 57 65 45 75 43" stroke="white" stroke-opacity=".52" stroke-width="10" stroke-linecap="round"/>
+</svg>

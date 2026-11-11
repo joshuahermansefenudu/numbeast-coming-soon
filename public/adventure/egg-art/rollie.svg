@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 180 232" fill="none">
+  <defs>
+    <linearGradient id="shell" x1="70" y1="70" x2="139" y2="217" gradientUnits="userSpaceOnUse"><stop stop-color="#F1CF7E"/><stop offset="1" stop-color="#B97B3C"/></linearGradient>
+    <clipPath id="egg"><path d="M100 62C62 62 26 119 26 165C26 205 57 225 100 225S174 205 174 165C174 119 138 62 100 62Z"/></clipPath>
+  </defs>
+  <path id="Earth-shell" d="M100 62C62 62 26 119 26 165C26 205 57 225 100 225S174 205 174 165C174 119 138 62 100 62Z" fill="url(#shell)"/>
+  <g id="Earth-diamonds" clip-path="url(#egg)" stroke="#835E35" stroke-width="3.5">
+    <path d="M24 86 155 231M-1 127 97 236M81 73 187 191M167 83 35 231M197 116 90 236M105 71 9 176"/>
+  </g>
+  <path id="Earth-crown" d="M100 62C74 57 48 86 38 110L68 96 91 121 110 94 139 111 157 122C148 86 126 58 100 62Z" fill="#9BC53F" stroke="#49672E" stroke-width="3.5" stroke-linejoin="round"/>
+  <path id="Earth-outline" d="M100 62C62 62 26 119 26 165C26 205 57 225 100 225S174 205 174 165C174 119 138 62 100 62Z" stroke="#465032" stroke-width="5"/>
+  <path id="Earth-stem" d="M99 63 103 38" stroke="#49672E" stroke-width="5" stroke-linecap="round"/>
+  <path id="Earth-leaves" d="M102 43C69 48 47 32 42 10C71 5 101 15 102 43ZM105 43C103 19 128 7 159 13C151 35 130 47 105 43Z" fill="#A1C83F" stroke="#49672E" stroke-width="4" stroke-linejoin="round"/>
+  <path id="Earth-leaf-veins" d="m56 20 39 19m18-3 32-15" stroke="#648534" stroke-width="3" stroke-linecap="round"/>
+</svg>
