@@ -3,9 +3,19 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
-const nunito = localFont({
-  src: "../public/adventure/nunito.woff2",
-  variable: "--font-nunito",
+const adventure = localFont({
+  src: "../public/adventure/bangers-400.woff2",
+  variable: "--font-adventure",
+  weight: "400",
+  display: "swap",
+});
+
+const interfaceFont = localFont({
+  src: [
+    { path: "../public/adventure/barlow-500.woff2", weight: "500" },
+    { path: "../public/adventure/barlow-700.woff2", weight: "700" },
+  ],
+  variable: "--font-interface",
   display: "swap",
 });
 
@@ -18,7 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={nunito.variable}>{children}</body>
+      <body className={`${adventure.variable} ${interfaceFont.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }

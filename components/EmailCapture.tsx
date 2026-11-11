@@ -66,7 +66,7 @@ export default function EmailCapture() {
               ? "Joining…"
               : status === "success"
                 ? "You’re in! ✓"
-                : "Join the adventure ↗"}
+                : "Join the adventure"}
           </button>
         </div>
         <div className="honey" aria-hidden="true">

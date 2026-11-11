@@ -4,7 +4,9 @@ A responsive, hero-only launch page for the Numbeast maths adventure, aimed at a
 
 Run `npm run dev`, `npm test`, or `npm run build`.
 
-The hero sequence pauses when requested or when reduced motion is enabled. The full prototype loads when a visitor opens the adventure and starts its narrated sequence after an explicit sound action. Its voice clips, font and artwork are served locally.
+The approved layout keeps parent signup inside the hero on desktop and mobile. Bangers supplies the adventure headline and character names; Barlow keeps the supporting text and form readable. Both fonts are self-hosted with their OFL licences in `public/adventure`.
+
+Gentle character motion pauses on request and respects reduced motion. The full narrated prototype remains in the portfolio case study, while this product page focuses on the hero and signup.
 
 Editable desktop and mobile design:
 https://www.figma.com/design/ZgXHw44vghMOppxotuw02d/Numbeast?node-id=4544-108
