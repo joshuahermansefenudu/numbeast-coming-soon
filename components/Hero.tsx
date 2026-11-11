@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState, type CSSProperties } from "react";
 import EmailCapture from "./EmailCapture";
+import useTouchHighlights from "./useTouchHighlights";
 
 const crew = [
   {
@@ -41,12 +42,13 @@ const eggs = [
 ];
 
 export default function Hero() {
+  const rootRef = useTouchHighlights();
   const [selected, setSelected] = useState<string | null>(null);
   const [highlighted, setHighlighted] = useState<string | null>(null);
   const [solved, setSolved] = useState(false);
 
   return (
-    <main className="launch-page">
+    <main className="launch-page" ref={rootRef}>
       <header className="launch-header">
         <a href="/" aria-label="Numbeast home">
           <Image
@@ -78,6 +80,7 @@ export default function Hero() {
         </div>
         <div
           className="crew-deck"
+          data-touch-highlight="cards"
           aria-label="Meet the other elemental companions"
         >
           {crew.map((c, i) => (
@@ -120,6 +123,7 @@ export default function Hero() {
         </div>
         <div
           className="featured-team"
+          data-touch-highlight="characters"
           role="group"
           aria-label="Your Numbeast team"
         >
@@ -175,6 +179,7 @@ export default function Hero() {
         <button
           type="button"
           className="quest-sticker"
+          data-touch-highlight="challenge"
           data-solved={solved}
           aria-pressed={solved}
           aria-label={
