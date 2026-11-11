@@ -264,6 +264,11 @@ input:focus-visible {
   text-align: left;
   rotate: calc((var(--card-index) - 1) * 8deg);
   transform-origin: center bottom;
+  transition:
+    translate 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    rotate 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 220ms,
+    box-shadow 220ms;
 }
 .beast-card::before {
   content: "";
@@ -273,10 +278,29 @@ input:focus-visible {
   border-radius: 9px;
   pointer-events: none;
 }
-.beast-card:hover,
 .beast-card:focus-visible,
 .beast-card[data-selected="true"] {
+  border-color: var(--gold);
   box-shadow: 0 12px 20px #061e2980;
+}
+.beast-card:focus-visible {
+  translate: 0 -14px;
+  rotate: 0deg;
+  z-index: 5;
+}
+@media (hover: hover) and (pointer: fine) {
+  .beast-card:hover {
+    translate: 0 -14px;
+    rotate: 0deg;
+    z-index: 5;
+    border-color: var(--gold);
+    box-shadow: 0 18px 28px #061e2980;
+  }
+  .beast-card:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 -18px;
+  }
 }
 .beast-card[data-selected="true"] {
   outline: 3px solid var(--gold);
@@ -595,5 +619,10 @@ input:focus-visible {
   }
   .email-row button::before {
     display: none;
+  }
+  .beast-card:hover,
+  .beast-card:focus-visible {
+    translate: none;
+    rotate: calc((var(--card-index) - 1) * 8deg);
   }
 }
