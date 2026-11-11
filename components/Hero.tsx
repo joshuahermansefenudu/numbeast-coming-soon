@@ -76,6 +76,13 @@ export default function Hero() {
     dialog.current?.close();
     setWatch(false);
   }
+  function playJourney() {
+    // Keep the first media play in the click handler's call chain.
+    const game = iframe.current?.contentWindow as
+      | (Window & { numbeastJourney?: { start: (sound: boolean) => void } })
+      | null;
+    game?.numbeastJourney?.start(true);
+  }
   function move(e: React.PointerEvent<HTMLDivElement>) {
     if (
       e.pointerType !== "mouse" ||
@@ -315,12 +322,7 @@ export default function Hero() {
             <button
               className="join-button"
               disabled={!ready}
-              onClick={() =>
-                iframe.current?.contentWindow?.postMessage(
-                  { type: "numbeast-start", sound: true },
-                  location.origin,
-                )
-              }
+              onClick={playJourney}
             >
               {ready ? "▶ Play with sound" : "Getting the adventure ready…"}
             </button>
